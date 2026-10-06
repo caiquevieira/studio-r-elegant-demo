@@ -1,7 +1,7 @@
 # Studio R Elegant — landing page
 
 Clone estático (HTML + Tailwind v4 compilado + JS puro) da página criada no Lovable
-(`caiquevieira/studio-elegante-booking`). Mesmo conteúdo e leiaute, com melhorias de
+(`caiquevieira/studio-elegante-booking`). Redesenhado a partir dela (mesmas cores e fotos), com melhorias de
 performance, SEO e acessibilidade.
 
 - **Raiz do repositório = raiz do site.** O CSS compilado (`assets/css/styles.css`) está versionado, então não há build no deploy.

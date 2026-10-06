@@ -2,85 +2,66 @@
 @source "../index.html";
 @source "../assets/js/main.js";
 
-/* Fontes auto-hospedadas (subconjunto latino; Manrope é variável 400–700) */
+/* Jost variável (300–600), subconjunto latino, auto-hospedada */
 @font-face {
-  font-family: "Italiana";
+  font-family: "Jost";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300 600;
   font-display: swap;
-  src: url("../fonts/italiana-latin.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Manrope";
-  font-style: normal;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url("../fonts/manrope-latin.woff2") format("woff2");
+  src: url("../fonts/jost-latin.woff2") format("woff2");
 }
 
-/* Tokens da identidade (mesmos valores da LP original no Lovable) */
+/* Tokens da identidade. Cores = as da LP original; "primary-deep" é o mesmo rosa
+   escurecido para botões e textos pequenos (contraste AA). Ver briefing.md, seção 7. */
 @theme inline {
-  --font-sans: "Manrope", sans-serif;
-  --font-display: "Italiana", serif;
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --color-nude: var(--nude);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-}
-
-:root {
-  --radius: 0.4rem;
-  --nude: oklch(0.935 0.024 70);
-  --background: oklch(0.985 0.006 25);
-  --foreground: oklch(0.22 0.012 30);
-  --card: oklch(1 0 0);
-  --primary: oklch(0.62 0.08 15);
-  --primary-foreground: oklch(0.99 0.004 20);
-  --secondary: oklch(0.87 0.055 67);
-  --secondary-foreground: oklch(0.22 0.012 30);
-  --muted: oklch(0.955 0.018 20);
-  --muted-foreground: oklch(0.48 0.02 30);
-  --accent: oklch(0.93 0.04 17);
-  --accent-foreground: oklch(0.28 0.02 25);
-  --border: oklch(0.88 0.025 35);
-  --input: oklch(0.88 0.025 35);
-  --ring: oklch(0.62 0.08 15);
+  --font-sans: "Jost", ui-sans-serif, system-ui, sans-serif;
+  --radius-md: 0.25rem;
+  --radius-2xl: 0.75rem;
+  --color-nude: #f4e7d9;
+  --color-background: #fef9f8;
+  --color-foreground: #201917;
+  --color-card: #ffffff;
+  --color-primary: #b17277;
+  --color-primary-deep: #8d4e53;
+  --color-primary-foreground: #fffbfa;
+  --color-secondary: #eeceae;
+  --color-secondary-foreground: #201917;
+  --color-muted: #fceceb;
+  --color-muted-foreground: #695a57;
+  --color-accent: #ffdede;
+  --color-border: #ecd9d3;
+  --color-ring: #8d4e53;
 }
 
 @layer base {
   * {
     border-color: var(--color-border);
   }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    letter-spacing: 0;
-  }
-  html {
-    scroll-behavior: smooth;
+    line-height: 1.7;
   }
   h1, h2, h3 {
-    font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: 0;
+    font-weight: 300;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
   }
   ::selection {
     background: var(--color-accent);
-    color: var(--color-accent-foreground);
+    color: var(--color-foreground);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 3px;
   }
   /* Ícones do sprite (<svg class="i"><use href="#i-..."/></svg>) */
   svg.i {
@@ -88,44 +69,40 @@
     height: 24px;
     fill: none;
     stroke: currentColor;
-    stroke-width: 2;
+    stroke-width: 1.5;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-  :focus-visible {
-    outline: 2px solid var(--color-ring);
-    outline-offset: 2px;
+  /* Ícone do WhatsApp (preenchido) */
+  svg.wa {
+    width: 1.15em;
+    height: 1.15em;
+    fill: currentColor;
+    flex-shrink: 0;
   }
 }
 
-/* Botões (equivalentes ao Button do shadcn usado no original) */
 @layer components {
-  .btn {
-    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors;
+  .container-lp {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
   }
-  .btn svg {
-    @apply pointer-events-none size-4 shrink-0;
+  .btn {
+    @apply inline-flex min-h-12 cursor-pointer items-center justify-center gap-2.5 rounded-md px-6 text-[0.95rem] font-medium whitespace-nowrap transition-colors;
   }
   .btn-primary {
-    @apply bg-primary text-primary-foreground shadow hover:bg-primary/90;
+    @apply bg-primary-deep text-primary-foreground hover:bg-foreground;
   }
   .btn-secondary {
-    @apply bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80;
+    @apply bg-secondary text-secondary-foreground hover:bg-nude;
   }
   .btn-outline {
-    @apply border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground;
-  }
-  .btn-ghost {
-    @apply hover:bg-accent hover:text-accent-foreground;
-  }
-  .btn-lg {
-    @apply h-10 px-8;
+    @apply border border-foreground/25 text-foreground hover:border-foreground hover:bg-foreground hover:text-background;
   }
   .btn-sm {
-    @apply h-8 px-3 text-xs;
+    @apply min-h-10 px-4 text-sm;
   }
-  .btn-icon {
-    @apply h-9 w-9;
+  .titulo-secao {
+    @apply text-4xl sm:text-5xl lg:text-6xl;
   }
 }
 

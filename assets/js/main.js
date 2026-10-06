@@ -42,7 +42,7 @@
   });
 
   // Filtro da galeria
-  var CLASSE_IMG = 'w-full object-cover transition-transform duration-500 hover:scale-[1.03]';
+  var CLASSE_IMG = 'w-full object-cover';
   var figuras = $$('figure[data-categoria]');
   var botoes = $$('[data-filtro]');
 
@@ -61,8 +61,8 @@
     visiveis.forEach(function (f, i) {
       // com quantidade ímpar, a última foto ocupa a linha inteira no celular
       var larga = visiveis.length % 2 === 1 && i === visiveis.length - 1;
-      f.className = 'overflow-hidden bg-card' + (larga ? ' col-span-2 sm:col-span-1' : '');
-      $('img', f).className = CLASSE_IMG + (larga ? ' aspect-[16/10] sm:aspect-[3/4]' : ' aspect-[3/4]');
+      f.className = 'overflow-hidden rounded-xl bg-card' + (larga ? ' col-span-2 sm:col-span-1' : '');
+      $('img', f).className = CLASSE_IMG + (larga ? ' aspect-[16/10] sm:aspect-[4/5]' : ' aspect-[4/5]');
     });
   }
 

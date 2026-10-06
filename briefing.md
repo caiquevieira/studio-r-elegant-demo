@@ -8,7 +8,7 @@ Origem: clone da LP do Lovable (`caiquevieira/studio-elegante-booking`, https://
 - Unidades: Jaguaré (Av. General Mac Arthur, 1187 - Jaguaré, São Paulo - SP) e Osasco (Av. Santo Antônio, 1453 - Vila Osasco, Osasco - SP)
 - WhatsApp: +55 11 97268-7788 (as duas unidades)
 - Agendamento direto Jaguaré: https://sheerme.com/g/studio-r-jaguare-60773
-- Instagram: https://www.instagram.com/studior.elegant/
+- Instagram: https://www.instagram.com/rstudior/
 
 ## Identidade visual
 Rosa blush, dourado champagne, grafite e branco. Fontes: Italiana (títulos) e Manrope (texto). Tokens em `_src/input.css`.

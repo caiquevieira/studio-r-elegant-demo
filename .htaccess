@@ -1,0 +1,17 @@
+# Hostinger (Apache)
+<IfModule mod_headers.c>
+  # DEMO:INICIO
+  Header set X-Robots-Tag "noindex, nofollow"
+  # DEMO:FIM
+</IfModule>
+# Não expõe arquivos de sistema (_src, README)
+RedirectMatch 404 ^/(_src|README\.md)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript
+</IfModule>
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+</IfModule>

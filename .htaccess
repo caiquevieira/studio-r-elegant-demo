@@ -5,7 +5,7 @@
   # DEMO:FIM
 </IfModule>
 # Não expõe arquivos de sistema (_src, README)
-RedirectMatch 404 ^/(_src|README\.md)
+RedirectMatch 404 ^/(_src|README\.md|briefing\.md)
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/css application/javascript
 </IfModule>

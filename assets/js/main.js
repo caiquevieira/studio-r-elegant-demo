@@ -1,4 +1,6 @@
 // Interações da página: menu mobile, seletor de unidade do WhatsApp e filtro da galeria.
+// Os links rastreáveis já têm data-track/data-origem (ver _docs/padrao-whatsapp.md);
+// GA4/Pixel e o banner de consentimento entram na contratação.
 (function () {
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -9,23 +11,37 @@
   function setMenu(aberto) {
     menu.hidden = !aberto;
     menuBtn.setAttribute('aria-expanded', String(aberto));
+    menuBtn.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
     $('[data-icon-menu]', menuBtn).classList.toggle('hidden', aberto);
     $('[data-icon-x]', menuBtn).classList.toggle('hidden', !aberto);
   }
   menuBtn.addEventListener('click', function () { setMenu(menu.hidden); });
   $$('a', menu).forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
 
-  // Botão flutuante do WhatsApp
+  // Botão flutuante do WhatsApp: sem JS é um link direto; com JS abre o seletor de unidade
   var waBtn = $('[data-wa-toggle]');
   var waMenu = $('#wa-menu');
-  waBtn.addEventListener('click', function () {
-    waMenu.hidden = !waMenu.hidden;
-    waBtn.setAttribute('aria-expanded', String(!waMenu.hidden));
+  function setWa(aberto) {
+    waMenu.hidden = !aberto;
+    waBtn.setAttribute('aria-expanded', String(aberto));
+  }
+  waBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    setWa(waMenu.hidden);
+  });
+
+  // Fechar menus com Esc ou clique fora
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (!waMenu.hidden) { setWa(false); waBtn.focus(); }
+    if (!menu.hidden) { setMenu(false); menuBtn.focus(); }
+  });
+  document.addEventListener('click', function (e) {
+    if (!waMenu.hidden && !waMenu.contains(e.target) && !waBtn.contains(e.target)) setWa(false);
+    if (!menu.hidden && !menu.contains(e.target) && !menuBtn.contains(e.target)) setMenu(false);
   });
 
   // Filtro da galeria
-  var ATIVO = 'bg-primary text-primary-foreground shadow hover:bg-primary/90'.split(' ');
-  var INATIVO = 'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground'.split(' ');
   var CLASSE_IMG = 'w-full object-cover transition-transform duration-500 hover:scale-[1.03]';
   var figuras = $$('figure[data-categoria]');
   var botoes = $$('[data-filtro]');
@@ -34,8 +50,8 @@
     botoes.forEach(function (b) {
       var ativo = b.getAttribute('data-filtro') === filtro;
       b.setAttribute('aria-pressed', String(ativo));
-      ATIVO.forEach(function (c) { b.classList.toggle(c, ativo); });
-      INATIVO.forEach(function (c) { b.classList.toggle(c, !ativo); });
+      b.classList.toggle('btn-primary', ativo);
+      b.classList.toggle('btn-outline', !ativo);
     });
     var visiveis = figuras.filter(function (f) {
       var mostrar = filtro === 'Todos' || f.getAttribute('data-categoria') === filtro;
@@ -53,5 +69,4 @@
   botoes.forEach(function (b) {
     b.addEventListener('click', function () { filtrar(b.getAttribute('data-filtro')); });
   });
-  filtrar('Todos');
 })();

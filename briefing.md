@@ -18,7 +18,9 @@ Rosa blush, dourado champagne, grafite e branco. Fontes: Italiana (títulos) e M
 - {{DOMINIO}} e acesso à Hostinger
 - {{PIXEL}} / GA4
 - Autorização de uso das imagens
-- Política de privacidade (a LP original não tem)
+- Política de privacidade + banner de consentimento (necessários ao ativar GA4/Pixel; os links já têm `data-track`)
+- CEP das unidades e horário de funcionamento (para o JSON-LD)
 
 ## Histórico
+- 2026-10-06: `demo-v2` — imagens em WebP (2,3 MB → 0,9 MB), fontes auto-hospedadas, SEO (OG, JSON-LD, favicons), acessibilidade e mensagens de WhatsApp por origem. Visual inalterado.
 - 2026-10-06: clone publicado em https://caiquevieira.github.io/studio-r-elegant-demo/ (tag `demo-v1`). Aprovação do cliente: pendente.
